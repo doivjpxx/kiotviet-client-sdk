@@ -14,6 +14,8 @@ import { PurchaseOrderHandler } from './resources/purchase-orders';
 import { BranchHandler } from './resources/branches';
 import { BankAccountHandler } from './resources/bank-accounts';
 import { PriceBookHandler } from './resources/price-books';
+import { SupplierHandler } from './resources/suppliers';
+import { TransferHandler } from './resources/transfers';
 import { SurchargeHandler } from './resources/surcharges';
 
 export class KiotVietClient {
@@ -33,6 +35,8 @@ export class KiotVietClient {
   public readonly branches: BranchHandler;
   public readonly bankAccounts: BankAccountHandler;
   public readonly priceBooks: PriceBookHandler;
+  public readonly suppliers: SupplierHandler;
+  public readonly transfers: TransferHandler;
   public readonly surcharges: SurchargeHandler;
 
   constructor(config: KiotVietClientConfig) {
@@ -56,6 +60,8 @@ export class KiotVietClient {
     this.branches = new BranchHandler(this);
     this.bankAccounts = new BankAccountHandler(this);
     this.priceBooks = new PriceBookHandler(this);
+    this.suppliers = new SupplierHandler(this);
+    this.transfers = new TransferHandler(this);
     this.surcharges = new SurchargeHandler(this);
   }
 
