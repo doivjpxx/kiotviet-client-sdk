@@ -9,5 +9,5 @@ export * from './customer';
 export * from './product';
 export * from './purchase-order';
 export * from './webhook';
-export * from './store';
 export * from './user';
+export * from './branch';
