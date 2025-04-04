@@ -1,6 +1,7 @@
-import { KiotVietClient } from "../client";
-import { KiotVietListResponse, Customer, CustomerCreateParams } from "../types";
-import { ValidationError } from "../errors";
+import { KiotVietClient } from '../client'
+import { KiotVietListResponse, CustomerCreateParams } from '../types'
+import { ValidationError } from '../errors'
+import { Customer } from '../types/customer'
 
 export class CustomerHandler {
   constructor(private client: KiotVietClient) {}
@@ -10,14 +11,9 @@ export class CustomerHandler {
    * @param params Filter parameters (pageSize, currentItem)
    * Documentation: GET /public/customers
    */
-  async list(
-    params: Record<string, any> = {},
-  ): Promise<KiotVietListResponse<Customer>> {
-    const response = await this.client.apiClient.get<KiotVietListResponse<Customer>>(
-      "/public/customers",
-      { params }
-    );
-    return response.data;
+  async list(params: Record<string, any> = {}): Promise<KiotVietListResponse<Customer>> {
+    const response = await this.client.apiClient.get<KiotVietListResponse<Customer>>('/public/customers', { params })
+    return response.data
   }
 
   /**
@@ -26,10 +22,8 @@ export class CustomerHandler {
    * Documentation: GET /public/customers/{id}
    */
   async getById(customerId: number): Promise<Customer> {
-    const response = await this.client.apiClient.get<Customer>(
-      `/public/customers/${customerId}`
-    );
-    return response.data;
+    const response = await this.client.apiClient.get<Customer>(`/public/customers/${customerId}`)
+    return response.data
   }
 
   /**
@@ -40,14 +34,11 @@ export class CustomerHandler {
   async create(customerData: CustomerCreateParams): Promise<Customer> {
     // Validate required fields
     if (!customerData.name) {
-      throw new ValidationError("Customer name is required");
+      throw new ValidationError('Customer name is required')
     }
 
-    const response = await this.client.apiClient.post<Customer>(
-      "/public/customers",
-      customerData
-    );
-    return response.data;
+    const response = await this.client.apiClient.post<Customer>('/public/customers', customerData)
+    return response.data
   }
 
   /**
@@ -55,20 +46,14 @@ export class CustomerHandler {
    * @param query Search query
    * @param params Additional filter parameters
    */
-  async search(
-    query: string,
-    params: Record<string, any> = {},
-  ): Promise<KiotVietListResponse<Customer>> {
-    const response = await this.client.apiClient.get<KiotVietListResponse<Customer>>(
-      "/public/customers",
-      {
-        params: {
-          ...params,
-          keyword: query,
-        },
-      }
-    );
-    return response.data;
+  async search(query: string, params: Record<string, any> = {}): Promise<KiotVietListResponse<Customer>> {
+    const response = await this.client.apiClient.get<KiotVietListResponse<Customer>>('/public/customers', {
+      params: {
+        ...params,
+        keyword: query,
+      },
+    })
+    return response.data
   }
 
   /**
@@ -76,20 +61,14 @@ export class CustomerHandler {
    * @param groupId The ID of the customer group
    * @param params Additional filter parameters
    */
-  async getByGroup(
-    groupId: number,
-    params: Record<string, any> = {},
-  ): Promise<KiotVietListResponse<Customer>> {
-    const response = await this.client.apiClient.get<KiotVietListResponse<Customer>>(
-      "/public/customers",
-      {
-        params: {
-          ...params,
-          customerGroupId: groupId,
-        },
-      }
-    );
-    return response.data;
+  async getByGroup(groupId: number, params: Record<string, any> = {}): Promise<KiotVietListResponse<Customer>> {
+    const response = await this.client.apiClient.get<KiotVietListResponse<Customer>>('/public/customers', {
+      params: {
+        ...params,
+        customerGroupId: groupId,
+      },
+    })
+    return response.data
   }
 
   /**
@@ -97,16 +76,13 @@ export class CustomerHandler {
    * @param contactNumber The customer's contact number
    */
   async getByContactNumber(contactNumber: string): Promise<Customer | null> {
-    const response = await this.client.apiClient.get<KiotVietListResponse<Customer>>(
-      "/public/customers",
-      {
-        params: {
-          contactNumber,
-          pageSize: 1,
-        },
-      }
-    );
+    const response = await this.client.apiClient.get<KiotVietListResponse<Customer>>('/public/customers', {
+      params: {
+        contactNumber,
+        pageSize: 1,
+      },
+    })
 
-    return response.data.data.length > 0 ? response.data.data[0] : null;
+    return response.data.data.length > 0 ? response.data.data[0] : null
   }
 }

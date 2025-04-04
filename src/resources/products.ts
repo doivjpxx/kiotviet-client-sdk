@@ -1,5 +1,5 @@
-import { KiotVietClient } from "../client";
-import { KiotVietListResponse, Product, ProductCreateParams, ProductUpdateParams } from "../types";
+import { KiotVietClient } from '../client'
+import { KiotVietListResponse, Product, ProductCreateParams, ProductUpdateParams } from '../types'
 
 export class ProductHandler {
   constructor(private client: KiotVietClient) {}
@@ -9,11 +9,8 @@ export class ProductHandler {
    * @param params Filter parameters (pageSize, currentItem, code, name, categoryId, etc.)
    */
   async list(params: Record<string, any> = {}): Promise<KiotVietListResponse<Product>> {
-    const response = await this.client.apiClient.get<KiotVietListResponse<Product>>(
-      '/products',
-      { params }
-    );
-    return response.data;
+    const response = await this.client.apiClient.get<KiotVietListResponse<Product>>('/products', { params })
+    return response.data
   }
 
   /**
@@ -21,8 +18,8 @@ export class ProductHandler {
    * @param productId The ID of the product to retrieve
    */
   async getById(productId: number): Promise<Product> {
-    const response = await this.client.apiClient.get<Product>(`/products/${productId}`);
-    return response.data;
+    const response = await this.client.apiClient.get<Product>(`/products/${productId}`)
+    return response.data
   }
 
   /**
@@ -30,11 +27,8 @@ export class ProductHandler {
    * @param productData The product data to create
    */
   async create(productData: ProductCreateParams): Promise<Product> {
-    const response = await this.client.apiClient.post<Product>(
-      '/products',
-      productData
-    );
-    return response.data;
+    const response = await this.client.apiClient.post<Product>('/products', productData)
+    return response.data
   }
 
   /**
@@ -43,11 +37,8 @@ export class ProductHandler {
    * @param productData The product data to update
    */
   async update(productId: number, productData: Partial<ProductUpdateParams>): Promise<Product> {
-    const response = await this.client.apiClient.put<Product>(
-      `/products/${productId}`,
-      productData
-    );
-    return response.data;
+    const response = await this.client.apiClient.put<Product>(`/products/${productId}`, productData)
+    return response.data
   }
 
   /**
@@ -55,7 +46,7 @@ export class ProductHandler {
    * @param productId The ID of the product to delete
    */
   async delete(productId: number): Promise<void> {
-    await this.client.apiClient.delete(`/products/${productId}`);
+    await this.client.apiClient.delete(`/products/${productId}`)
   }
 
   /**
@@ -64,16 +55,13 @@ export class ProductHandler {
    * @param params Additional filter parameters
    */
   async getByCategory(categoryId: number, params: Record<string, any> = {}): Promise<KiotVietListResponse<Product>> {
-    const response = await this.client.apiClient.get<KiotVietListResponse<Product>>(
-      '/products',
-      {
-        params: {
-          ...params,
-          categoryId
-        }
-      }
-    );
-    return response.data;
+    const response = await this.client.apiClient.get<KiotVietListResponse<Product>>('/products', {
+      params: {
+        ...params,
+        categoryId,
+      },
+    })
+    return response.data
   }
 
   /**
@@ -82,16 +70,13 @@ export class ProductHandler {
    * @param params Additional filter parameters
    */
   async search(query: string, params: Record<string, any> = {}): Promise<KiotVietListResponse<Product>> {
-    const response = await this.client.apiClient.get<KiotVietListResponse<Product>>(
-      '/products',
-      {
-        params: {
-          ...params,
-          name: query
-        }
-      }
-    );
-    return response.data;
+    const response = await this.client.apiClient.get<KiotVietListResponse<Product>>('/products', {
+      params: {
+        ...params,
+        name: query,
+      },
+    })
+    return response.data
   }
 
   /**
@@ -99,20 +84,17 @@ export class ProductHandler {
    * @param barcode The product barcode
    */
   async getByBarcode(barcode: string): Promise<Product> {
-    const response = await this.client.apiClient.get<KiotVietListResponse<Product>>(
-      '/products',
-      {
-        params: {
-          barcode,
-          pageSize: 1
-        }
-      }
-    );
-    
+    const response = await this.client.apiClient.get<KiotVietListResponse<Product>>('/products', {
+      params: {
+        barcode,
+        pageSize: 1,
+      },
+    })
+
     if (!response.data.data.length) {
-      throw new Error(`Product with barcode ${barcode} not found`);
+      throw new Error(`Product with barcode ${barcode} not found`)
     }
-    
-    return response.data.data[0];
+
+    return response.data.data[0]
   }
 }
