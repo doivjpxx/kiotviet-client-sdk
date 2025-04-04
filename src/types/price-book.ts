@@ -50,7 +50,7 @@ export interface PriceBookListParams {
   lastModifiedFrom?: string;
 }
 
-export interface UpdatePriceDetailParams {  
+export interface UpdatePriceDetailParams {
   pricebookId: number;
   productId: number;
   price: number;
