@@ -8,6 +8,7 @@ import { CustomerHandler } from './resources/customers';
 import { ProductHandler } from './resources/products';
 import { OrderHandler } from './resources/orders';
 import { InvoiceHandler } from './resources/invoices';
+import { PurchaseOrderHandler } from './resources/purchase-orders';
 
 export class KiotVietClient {
   private config: Required<KiotVietClientConfig>;
@@ -20,6 +21,7 @@ export class KiotVietClient {
   public readonly orders: OrderHandler;
   public readonly products: ProductHandler;
   public readonly invoices: InvoiceHandler;
+  public readonly purchaseOrders: PurchaseOrderHandler;
 
   constructor(config: KiotVietClientConfig) {
     this.validateConfig(config);
@@ -36,6 +38,7 @@ export class KiotVietClient {
     this.orders = new OrderHandler(this);
     this.products = new ProductHandler(this);
     this.invoices = new InvoiceHandler(this);
+    this.purchaseOrders = new PurchaseOrderHandler(this);
   }
 
   private validateConfig(config: KiotVietClientConfig): void {
