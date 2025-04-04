@@ -33,8 +33,9 @@ import { KiotVietClient } from "kiotviet-client-sdk";
 
 // Khởi tạo client
 const client = new KiotVietClient({
-  retailerName: "your_retailer_name",
-  accessToken: "your_access_token"
+  clientId: "your_client_id",
+  clientSecret: "your_client_secret",
+  retailerName: "your_retailer_name"
 });
 ```
 
