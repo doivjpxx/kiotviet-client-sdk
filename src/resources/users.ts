@@ -1,10 +1,5 @@
 import { KiotVietClient } from '../client';
-import {
-  User,
-  UserListParams,
-  UserListResponse,
-  UserRole
-} from '../types/user';
+import { User, UserListParams, UserListResponse, UserRole } from '../types/user';
 
 export class UserHandler {
   constructor(private client: KiotVietClient) {}
@@ -14,10 +9,7 @@ export class UserHandler {
    * @param params Filter parameters
    */
   async list(params: UserListParams = {}): Promise<UserListResponse> {
-    const response = await this.client.apiClient.get<UserListResponse>(
-      '/users',
-      { params }
-    );
+    const response = await this.client.apiClient.get<UserListResponse>('/users', { params });
     return response.data;
   }
 
@@ -35,15 +27,12 @@ export class UserHandler {
    * @param params Additional filter parameters (excluding isActive)
    */
   async getActive(params: Omit<UserListParams, 'isActive'> = {}): Promise<UserListResponse> {
-    const response = await this.client.apiClient.get<UserListResponse>(
-      '/users',
-      {
-        params: {
-          ...params,
-          isActive: true
-        }
-      }
-    );
+    const response = await this.client.apiClient.get<UserListResponse>('/users', {
+      params: {
+        ...params,
+        isActive: true,
+      },
+    });
     return response.data;
   }
 
@@ -52,19 +41,13 @@ export class UserHandler {
    * @param branchId The ID of the branch to filter by
    * @param params Additional filter parameters (excluding branchId)
    */
-  async getByBranch(
-    branchId: number,
-    params: Omit<UserListParams, 'branchId'> = {}
-  ): Promise<UserListResponse> {
-    const response = await this.client.apiClient.get<UserListResponse>(
-      '/users',
-      {
-        params: {
-          ...params,
-          branchId
-        }
-      }
-    );
+  async getByBranch(branchId: number, params: Omit<UserListParams, 'branchId'> = {}): Promise<UserListResponse> {
+    const response = await this.client.apiClient.get<UserListResponse>('/users', {
+      params: {
+        ...params,
+        branchId,
+      },
+    });
     return response.data;
   }
 
@@ -73,19 +56,13 @@ export class UserHandler {
    * @param roleId The role ID to filter by
    * @param params Additional filter parameters (excluding roleId)
    */
-  async getByRole(
-    roleId: UserRole,
-    params: Omit<UserListParams, 'roleId'> = {}
-  ): Promise<UserListResponse> {
-    const response = await this.client.apiClient.get<UserListResponse>(
-      '/users',
-      {
-        params: {
-          ...params,
-          roleId
-        }
-      }
-    );
+  async getByRole(roleId: UserRole, params: Omit<UserListParams, 'roleId'> = {}): Promise<UserListResponse> {
+    const response = await this.client.apiClient.get<UserListResponse>('/users', {
+      params: {
+        ...params,
+        roleId,
+      },
+    });
     return response.data;
   }
 
@@ -94,20 +71,14 @@ export class UserHandler {
    * @param query Search query (matches against name or code)
    * @param params Additional filter parameters (excluding name and code)
    */
-  async search(
-    query: string,
-    params: Omit<UserListParams, 'name' | 'code'> = {}
-  ): Promise<UserListResponse> {
-    const response = await this.client.apiClient.get<UserListResponse>(
-      '/users',
-      {
-        params: {
-          ...params,
-          name: query
-          // The API will match against both name and code when name parameter is provided
-        }
-      }
-    );
+  async search(query: string, params: Omit<UserListParams, 'name' | 'code'> = {}): Promise<UserListResponse> {
+    const response = await this.client.apiClient.get<UserListResponse>('/users', {
+      params: {
+        ...params,
+        name: query,
+        // The API will match against both name and code when name parameter is provided
+      },
+    });
     return response.data;
   }
 }

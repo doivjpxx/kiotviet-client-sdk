@@ -6,7 +6,7 @@ import {
   WebhookUpdateParams,
   WebhookListParams,
   WebhookListResponse,
-  WebhookPayload
+  WebhookPayload,
 } from '../types/webhook';
 
 export class WebhookHandler {
@@ -17,10 +17,7 @@ export class WebhookHandler {
    * @param params Filter parameters
    */
   async list(params: WebhookListParams = {}): Promise<WebhookListResponse> {
-    const response = await this.client.apiClient.get<WebhookListResponse>(
-      '/webhooks',
-      { params }
-    );
+    const response = await this.client.apiClient.get<WebhookListResponse>('/webhooks', { params });
     return response.data;
   }
 
@@ -38,10 +35,7 @@ export class WebhookHandler {
    * @param webhookData The webhook configuration data
    */
   async create(webhookData: WebhookCreateParams): Promise<Webhook> {
-    const response = await this.client.apiClient.post<Webhook>(
-      '/webhooks',
-      webhookData
-    );
+    const response = await this.client.apiClient.post<Webhook>('/webhooks', webhookData);
     return response.data;
   }
 
@@ -51,13 +45,10 @@ export class WebhookHandler {
    * @param webhookData The webhook data to update
    */
   async update(webhookId: number, webhookData: Partial<WebhookUpdateParams>): Promise<Webhook> {
-    const response = await this.client.apiClient.put<Webhook>(
-      `/webhooks/${webhookId}`,
-      {
-        id: webhookId,
-        ...webhookData
-      }
-    );
+    const response = await this.client.apiClient.put<Webhook>(`/webhooks/${webhookId}`, {
+      id: webhookId,
+      ...webhookData,
+    });
     return response.data;
   }
 
@@ -92,10 +83,8 @@ export class WebhookHandler {
    * @param secret The webhook secret
    */
   verifySignature(payload: string, signature: string, secret: string): boolean {
-    const expectedSignature = createHmac('sha256', secret)
-      .update(payload)
-      .digest('hex');
-    
+    const expectedSignature = createHmac('sha256', secret).update(payload).digest('hex');
+
     return signature === expectedSignature;
   }
 
@@ -105,11 +94,7 @@ export class WebhookHandler {
    * @param signature The signature from X-KiotViet-Signature header
    * @param secret The webhook secret
    */
-  parseWebhookPayload<T = any>(
-    payload: string,
-    signature: string,
-    secret: string
-  ): WebhookPayload<T> {
+  parseWebhookPayload<T = any>(payload: string, signature: string, secret: string): WebhookPayload<T> {
     if (!this.verifySignature(payload, signature, secret)) {
       throw new Error('Invalid webhook signature');
     }

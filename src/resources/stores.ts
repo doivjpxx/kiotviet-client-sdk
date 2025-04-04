@@ -1,9 +1,5 @@
 import { KiotVietClient } from '../client';
-import {
-  Store,
-  StoreListParams,
-  StoreListResponse
-} from '../types/store';
+import { Store, StoreListParams, StoreListResponse } from '../types/store';
 
 export class StoreHandler {
   constructor(private client: KiotVietClient) {}
@@ -13,10 +9,7 @@ export class StoreHandler {
    * @param params Filter parameters (pageSize, currentItem, isActive, code, name)
    */
   async list(params: StoreListParams = {}): Promise<StoreListResponse> {
-    const response = await this.client.apiClient.get<StoreListResponse>(
-      '/stores',
-      { params }
-    );
+    const response = await this.client.apiClient.get<StoreListResponse>('/stores', { params });
     return response.data;
   }
 
@@ -34,15 +27,12 @@ export class StoreHandler {
    * @param params Additional filter parameters (excluding isActive)
    */
   async getActive(params: Omit<StoreListParams, 'isActive'> = {}): Promise<StoreListResponse> {
-    const response = await this.client.apiClient.get<StoreListResponse>(
-      '/stores',
-      {
-        params: {
-          ...params,
-          isActive: true
-        }
-      }
-    );
+    const response = await this.client.apiClient.get<StoreListResponse>('/stores', {
+      params: {
+        ...params,
+        isActive: true,
+      },
+    });
     return response.data;
   }
 
@@ -51,20 +41,14 @@ export class StoreHandler {
    * @param query Search query (matches against name or code)
    * @param params Additional filter parameters (excluding name and code)
    */
-  async search(
-    query: string,
-    params: Omit<StoreListParams, 'name' | 'code'> = {}
-  ): Promise<StoreListResponse> {
-    const response = await this.client.apiClient.get<StoreListResponse>(
-      '/stores',
-      {
-        params: {
-          ...params,
-          name: query,
-          // The API will match against both name and code when name parameter is provided
-        }
-      }
-    );
+  async search(query: string, params: Omit<StoreListParams, 'name' | 'code'> = {}): Promise<StoreListResponse> {
+    const response = await this.client.apiClient.get<StoreListResponse>('/stores', {
+      params: {
+        ...params,
+        name: query,
+        // The API will match against both name and code when name parameter is provided
+      },
+    });
     return response.data;
   }
 }

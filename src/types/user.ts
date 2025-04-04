@@ -35,6 +35,6 @@ export enum UserRole {
   Admin = 1,
   Manager = 2,
   Cashier = 3,
-  Staff = 4
+  Staff = 4,
   // Add other roles as per KiotViet documentation
 }

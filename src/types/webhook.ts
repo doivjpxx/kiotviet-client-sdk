@@ -15,7 +15,7 @@ export enum WebhookEvent {
   OrderDeleted = 'order.deleted',
   InvoiceCreated = 'invoice.created',
   InvoiceUpdated = 'invoice.updated',
-  InvoiceDeleted = 'invoice.deleted'
+  InvoiceDeleted = 'invoice.deleted',
 }
 
 export interface Webhook {
