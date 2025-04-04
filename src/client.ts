@@ -9,7 +9,6 @@ import { ProductHandler } from './resources/products';
 import { OrderHandler } from './resources/orders';
 import { InvoiceHandler } from './resources/invoices';
 import { WebhookHandler } from './resources/webhooks';
-import { StoreHandler } from './resources/stores';
 import { UserHandler } from './resources/users';
 import { PurchaseOrderHandler } from './resources/purchase-orders';
 
@@ -25,7 +24,6 @@ export class KiotVietClient {
   public readonly products: ProductHandler;
   public readonly invoices: InvoiceHandler;
   public readonly webhooks: WebhookHandler;
-  public readonly stores: StoreHandler;
   public readonly users: UserHandler;
   public readonly purchaseOrders: PurchaseOrderHandler;
 
@@ -45,7 +43,6 @@ export class KiotVietClient {
     this.products = new ProductHandler(this);
     this.invoices = new InvoiceHandler(this);
     this.webhooks = new WebhookHandler(this);
-    this.stores = new StoreHandler(this);
     this.users = new UserHandler(this);
     this.purchaseOrders = new PurchaseOrderHandler(this);
   }
