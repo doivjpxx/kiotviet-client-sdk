@@ -1,30 +1,30 @@
-import { KiotVietListResponse } from './common'
+import { KiotVietListResponse } from './common';
 
 export interface Category {
-  id: number
-  name: string
-  parentId: number | null
-  hasChild: boolean
-  description?: string
-  retailerId: number
-  modifiedDate: string
-  createdDate: string
+  id: number;
+  name: string;
+  parentId: number | null;
+  hasChild: boolean;
+  description?: string;
+  retailerId: number;
+  modifiedDate: string;
+  createdDate: string;
 }
 
 export interface CategoryCreateParams {
-  name: string
-  parentId?: number
-  description?: string
+  name: string;
+  parentId?: number;
+  description?: string;
 }
 
 export interface CategoryUpdateParams extends Partial<CategoryCreateParams> {
-  id: number
+  id: number;
 }
 
 export interface CategoryListParams {
-  pageSize?: number
-  currentItem?: number
-  hierarchicalData?: boolean
+  pageSize?: number;
+  currentItem?: number;
+  hierarchicalData?: boolean;
 }
 
-export type CategoryListResponse = KiotVietListResponse<Category>
+export type CategoryListResponse = KiotVietListResponse<Category>;

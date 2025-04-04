@@ -28,17 +28,17 @@
     "pos"
   ],
   "author": {
-    "name": "Your Name",
-    "email": "your.email@example.com"
+    "name": "Phong H.",
+    "email": "huyphongbn24@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourusername/kiotviet-client-sdk.git"
+    "url": "git+https://github.com/doivjpxx/kiotviet-client-sdk.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/kiotviet-client-sdk/issues"
+    "url": "https://github.com/doivjpxx/kiotviet-client-sdk/issues"
   },
-  "homepage": "https://github.com/yourusername/kiotviet-client-sdk#readme",
+  "homepage": "https://github.com/doivjpxx/kiotviet-client-sdk#readme",
   "license": "MIT",
   "engines": {
     "node": ">=14.0.0"

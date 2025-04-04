@@ -1,11 +1,11 @@
-import { KiotVietClient } from '../client'
+import { KiotVietClient } from '../client';
 import {
   Category,
   CategoryCreateParams,
   CategoryUpdateParams,
   CategoryListParams,
   CategoryListResponse,
-} from '../types/category'
+} from '../types/category';
 
 export class CategoryHandler {
   constructor(private client: KiotVietClient) {}
@@ -15,8 +15,8 @@ export class CategoryHandler {
    * @param params Filter and pagination parameters
    */
   async list(params: CategoryListParams = {}): Promise<CategoryListResponse> {
-    const response = await this.client.apiClient.get<CategoryListResponse>('/categories', { params })
-    return response.data
+    const response = await this.client.apiClient.get<CategoryListResponse>('/categories', { params });
+    return response.data;
   }
 
   /**
@@ -24,8 +24,8 @@ export class CategoryHandler {
    * @param categoryId The ID of the category to retrieve
    */
   async getById(categoryId: number): Promise<Category> {
-    const response = await this.client.apiClient.get<Category>(`/categories/${categoryId}`)
-    return response.data
+    const response = await this.client.apiClient.get<Category>(`/categories/${categoryId}`);
+    return response.data;
   }
 
   /**
@@ -33,8 +33,8 @@ export class CategoryHandler {
    * @param categoryData The category data to create
    */
   async create(categoryData: CategoryCreateParams): Promise<Category> {
-    const response = await this.client.apiClient.post<Category>('/categories', categoryData)
-    return response.data
+    const response = await this.client.apiClient.post<Category>('/categories', categoryData);
+    return response.data;
   }
 
   /**
@@ -43,8 +43,8 @@ export class CategoryHandler {
    * @param categoryData The category data to update
    */
   async update(categoryId: number, categoryData: Partial<CategoryUpdateParams>): Promise<Category> {
-    const response = await this.client.apiClient.put<Category>(`/categories/${categoryId}`, categoryData)
-    return response.data
+    const response = await this.client.apiClient.put<Category>(`/categories/${categoryId}`, categoryData);
+    return response.data;
   }
 
   /**
@@ -52,7 +52,7 @@ export class CategoryHandler {
    * @param categoryId The ID of the category to delete
    */
   async delete(categoryId: number): Promise<void> {
-    await this.client.apiClient.delete(`/categories/${categoryId}`)
+    await this.client.apiClient.delete(`/categories/${categoryId}`);
   }
 
   /**
@@ -65,7 +65,7 @@ export class CategoryHandler {
         ...params,
         hierarchicalData: true,
       },
-    })
-    return response.data
+    });
+    return response.data;
   }
 }

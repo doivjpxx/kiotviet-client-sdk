@@ -31,3 +31,8 @@ const client = new KiotVietClient({
 
 // The SDK automatically handles token management!
 ```
+
+
+
+![npm version](https://img.shields.io/npm/v/kiotviet-client-sdk)
+![license](https://img.shields.io/npm/l/kiotviet-client-sdk)

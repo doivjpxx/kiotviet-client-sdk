@@ -1,7 +1,7 @@
-import { KiotVietClient } from '../client'
-import { KiotVietListResponse, CustomerCreateParams } from '../types'
-import { ValidationError } from '../errors'
-import { Customer } from '../types/customer'
+import { KiotVietClient } from '../client';
+import { KiotVietListResponse, CustomerCreateParams } from '../types';
+import { ValidationError } from '../errors';
+import { Customer } from '../types/customer';
 
 export class CustomerHandler {
   constructor(private client: KiotVietClient) {}
@@ -12,8 +12,8 @@ export class CustomerHandler {
    * Documentation: GET /public/customers
    */
   async list(params: Record<string, any> = {}): Promise<KiotVietListResponse<Customer>> {
-    const response = await this.client.apiClient.get<KiotVietListResponse<Customer>>('/public/customers', { params })
-    return response.data
+    const response = await this.client.apiClient.get<KiotVietListResponse<Customer>>('/public/customers', { params });
+    return response.data;
   }
 
   /**
@@ -22,8 +22,8 @@ export class CustomerHandler {
    * Documentation: GET /public/customers/{id}
    */
   async getById(customerId: number): Promise<Customer> {
-    const response = await this.client.apiClient.get<Customer>(`/public/customers/${customerId}`)
-    return response.data
+    const response = await this.client.apiClient.get<Customer>(`/public/customers/${customerId}`);
+    return response.data;
   }
 
   /**
@@ -34,11 +34,11 @@ export class CustomerHandler {
   async create(customerData: CustomerCreateParams): Promise<Customer> {
     // Validate required fields
     if (!customerData.name) {
-      throw new ValidationError('Customer name is required')
+      throw new ValidationError('Customer name is required');
     }
 
-    const response = await this.client.apiClient.post<Customer>('/public/customers', customerData)
-    return response.data
+    const response = await this.client.apiClient.post<Customer>('/public/customers', customerData);
+    return response.data;
   }
 
   /**
@@ -52,8 +52,8 @@ export class CustomerHandler {
         ...params,
         keyword: query,
       },
-    })
-    return response.data
+    });
+    return response.data;
   }
 
   /**
@@ -67,8 +67,8 @@ export class CustomerHandler {
         ...params,
         customerGroupId: groupId,
       },
-    })
-    return response.data
+    });
+    return response.data;
   }
 
   /**
@@ -81,8 +81,8 @@ export class CustomerHandler {
         contactNumber,
         pageSize: 1,
       },
-    })
+    });
 
-    return response.data.data.length > 0 ? response.data.data[0] : null
+    return response.data.data.length > 0 ? response.data.data[0] : null;
   }
 }

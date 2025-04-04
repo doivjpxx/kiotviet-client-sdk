@@ -5,15 +5,15 @@ export const API_CONSTANTS = {
   TOKEN_BUFFER_SECONDS: 60,
   DEFAULT_TIMEOUT: 30000,
   DEFAULT_SCOPE: 'PublicApi.Access',
-} as const
+} as const;
 
 export const HTTP_METHODS = {
   POST: 'POST',
   PUT: 'PUT',
   PATCH: 'PATCH',
-} as const
+} as const;
 
 export const CONTENT_TYPES = {
   JSON: 'application/json',
   FORM_URLENCODED: 'application/x-www-form-urlencoded',
-} as const
+} as const;

@@ -1,6 +1,6 @@
 import { KiotVietListResponse } from './common';
 
-export interface OrderProduct {
+export interface PurchaseOrderProduct {
   productId: number;
   productCode: string;
   productName: string;
@@ -10,32 +10,32 @@ export interface OrderProduct {
   note?: string;
 }
 
-export interface Order {
+export interface PurchaseOrder {
   id: number;
   code: string;
   purchaseDate: string;
   branchId: number;
   branchName: string;
-  customerId?: number;
-  customerCode?: string;
-  customerName?: string;
+  supplierId?: number;
+  supplierCode?: string;
+  supplierName?: string;
   total: number;
   discount?: number;
   description?: string;
   status: number;
   statusValue: string;
-  orderDetails: OrderProduct[];
+  purchaseOrderDetails: PurchaseOrderProduct[];
   retailerId: number;
-  soldById?: number;
-  soldByName?: string;
+  createdById?: number;
+  createdByName?: string;
   modifiedDate: string;
   createdDate: string;
 }
 
-export interface OrderCreateParams {
+export interface PurchaseOrderCreateParams {
   branchId: number;
-  customerId?: number;
-  orderDetails: Array<{
+  supplierId?: number;
+  purchaseOrderDetails: Array<{
     productId: number;
     quantity: number;
     price: number;
@@ -44,35 +44,34 @@ export interface OrderCreateParams {
   }>;
   description?: string;
   discount?: number;
-  makeInvoice?: boolean;
+  purchaseDate?: string;
 }
 
-export interface OrderUpdateParams extends Partial<Omit<OrderCreateParams, 'makeInvoice'>> {
+export interface PurchaseOrderUpdateParams extends Partial<PurchaseOrderCreateParams> {
   id: number;
 }
 
-export interface OrderListParams {
+export interface PurchaseOrderListParams {
   pageSize?: number;
   currentItem?: number;
   status?: number;
   fromPurchaseDate?: string;
   toPurchaseDate?: string;
-  customerPhone?: string;
-  customerCode?: string;
-  orderCode?: string;
+  supplierCode?: string;
+  code?: string;
 }
 
-export interface OrderStatusCount {
+export interface PurchaseOrderStatusCount {
   status: number;
   statusValue: string;
   count: number;
 }
 
-export interface OrderListResponse extends KiotVietListResponse<Order> {
-  statusCount?: OrderStatusCount[];
+export interface PurchaseOrderListResponse extends KiotVietListResponse<PurchaseOrder> {
+  statusCount?: PurchaseOrderStatusCount[];
 }
 
-export enum OrderStatus {
+export enum PurchaseOrderStatus {
   Draft = 1,
   Processing = 2,
   Completed = 3,

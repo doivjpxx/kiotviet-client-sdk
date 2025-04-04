@@ -1,4 +1,4 @@
-import { KiotVietClient } from '../client'
+import { KiotVietClient } from '../client';
 import {
   Invoice,
   InvoiceCreateParams,
@@ -6,7 +6,7 @@ import {
   InvoiceListParams,
   InvoiceListResponse,
   InvoiceStatus,
-} from '../types/invoice'
+} from '../types/invoice';
 
 export class InvoiceHandler {
   constructor(private client: KiotVietClient) {}
@@ -16,8 +16,8 @@ export class InvoiceHandler {
    * @param params Filter parameters
    */
   async list(params: InvoiceListParams = {}): Promise<InvoiceListResponse> {
-    const response = await this.client.apiClient.get<InvoiceListResponse>('/invoices', { params })
-    return response.data
+    const response = await this.client.apiClient.get<InvoiceListResponse>('/invoices', { params });
+    return response.data;
   }
 
   /**
@@ -25,8 +25,8 @@ export class InvoiceHandler {
    * @param invoiceId The ID of the invoice to retrieve
    */
   async getById(invoiceId: number): Promise<Invoice> {
-    const response = await this.client.apiClient.get<Invoice>(`/invoices/${invoiceId}`)
-    return response.data
+    const response = await this.client.apiClient.get<Invoice>(`/invoices/${invoiceId}`);
+    return response.data;
   }
 
   /**
@@ -34,8 +34,8 @@ export class InvoiceHandler {
    * @param invoiceData The invoice data to create
    */
   async create(invoiceData: InvoiceCreateParams): Promise<Invoice> {
-    const response = await this.client.apiClient.post<Invoice>('/invoices', invoiceData)
-    return response.data
+    const response = await this.client.apiClient.post<Invoice>('/invoices', invoiceData);
+    return response.data;
   }
 
   /**
@@ -47,8 +47,8 @@ export class InvoiceHandler {
     const response = await this.client.apiClient.put<Invoice>(`/invoices/${invoiceId}`, {
       id: invoiceId,
       ...invoiceData,
-    })
-    return response.data
+    });
+    return response.data;
   }
 
   /**
@@ -61,8 +61,8 @@ export class InvoiceHandler {
       id: invoiceId,
       status: InvoiceStatus.Cancelled,
       description: reason,
-    })
-    return response.data
+    });
+    return response.data;
   }
 
   /**
@@ -82,8 +82,8 @@ export class InvoiceHandler {
         fromPurchaseDate: fromDate,
         toPurchaseDate: toDate,
       },
-    })
-    return response.data
+    });
+    return response.data;
   }
 
   /**
@@ -96,15 +96,15 @@ export class InvoiceHandler {
     params: Omit<InvoiceListParams, 'customerPhone' | 'customerCode'> = {},
   ): Promise<InvoiceListResponse> {
     // Try to determine if the identifier is a phone number
-    const isPhone = /^\d+$/.test(customerIdentifier)
+    const isPhone = /^\d+$/.test(customerIdentifier);
 
     const response = await this.client.apiClient.get<InvoiceListResponse>('/invoices', {
       params: {
         ...params,
         ...(isPhone ? { customerPhone: customerIdentifier } : { customerCode: customerIdentifier }),
       },
-    })
-    return response.data
+    });
+    return response.data;
   }
 
   /**
@@ -118,7 +118,7 @@ export class InvoiceHandler {
         ...params,
         orderId,
       },
-    })
-    return response.data
+    });
+    return response.data;
   }
 }

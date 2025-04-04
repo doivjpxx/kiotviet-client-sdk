@@ -1,4 +1,4 @@
-import { KiotVietClient } from '../client'
+import { KiotVietClient } from '../client';
 import {
   Order,
   OrderCreateParams,
@@ -6,7 +6,7 @@ import {
   OrderListParams,
   OrderListResponse,
   OrderStatus,
-} from '../types/order'
+} from '../types/order';
 
 export class OrderHandler {
   constructor(private client: KiotVietClient) {}
@@ -16,8 +16,8 @@ export class OrderHandler {
    * @param params Filter parameters
    */
   async list(params: OrderListParams = {}): Promise<OrderListResponse> {
-    const response = await this.client.apiClient.get<OrderListResponse>('/orders', { params })
-    return response.data
+    const response = await this.client.apiClient.get<OrderListResponse>('/orders', { params });
+    return response.data;
   }
 
   /**
@@ -25,8 +25,8 @@ export class OrderHandler {
    * @param orderId The ID of the order to retrieve
    */
   async getById(orderId: number): Promise<Order> {
-    const response = await this.client.apiClient.get<Order>(`/orders/${orderId}`)
-    return response.data
+    const response = await this.client.apiClient.get<Order>(`/orders/${orderId}`);
+    return response.data;
   }
 
   /**
@@ -34,8 +34,8 @@ export class OrderHandler {
    * @param orderData The order data to create
    */
   async create(orderData: OrderCreateParams): Promise<Order> {
-    const response = await this.client.apiClient.post<Order>('/orders', orderData)
-    return response.data
+    const response = await this.client.apiClient.post<Order>('/orders', orderData);
+    return response.data;
   }
 
   /**
@@ -47,8 +47,8 @@ export class OrderHandler {
     const response = await this.client.apiClient.put<Order>(`/orders/${orderId}`, {
       id: orderId,
       ...orderData,
-    })
-    return response.data
+    });
+    return response.data;
   }
 
   /**
@@ -61,8 +61,8 @@ export class OrderHandler {
       id: orderId,
       status: OrderStatus.Cancelled,
       description: reason,
-    })
-    return response.data
+    });
+    return response.data;
   }
 
   /**
@@ -82,8 +82,8 @@ export class OrderHandler {
         fromPurchaseDate: fromDate,
         toPurchaseDate: toDate,
       },
-    })
-    return response.data
+    });
+    return response.data;
   }
 
   /**
@@ -96,14 +96,14 @@ export class OrderHandler {
     params: Omit<OrderListParams, 'customerPhone' | 'customerCode'> = {},
   ): Promise<OrderListResponse> {
     // Try to determine if the identifier is a phone number
-    const isPhone = /^\d+$/.test(customerIdentifier)
+    const isPhone = /^\d+$/.test(customerIdentifier);
 
     const response = await this.client.apiClient.get<OrderListResponse>('/orders', {
       params: {
         ...params,
         ...(isPhone ? { customerPhone: customerIdentifier } : { customerCode: customerIdentifier }),
       },
-    })
-    return response.data
+    });
+    return response.data;
   }
 }
