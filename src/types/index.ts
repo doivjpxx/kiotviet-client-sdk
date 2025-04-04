@@ -8,5 +8,7 @@ export * from './invoice';
 export * from './customer';
 export * from './product';
 export * from './purchase-order';
+export * from './webhook';
+export * from './store';
+export * from './user';
 
-// Add other resource types as we create them
