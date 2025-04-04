@@ -11,3 +11,6 @@ export * from './purchase-order';
 export * from './webhook';
 export * from './user';
 export * from './branch';
+export * from './bank-account';
+export * from './price-book';
+export * from './surcharge';

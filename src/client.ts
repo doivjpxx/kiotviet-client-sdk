@@ -12,6 +12,9 @@ import { WebhookHandler } from './resources/webhooks';
 import { UserHandler } from './resources/users';
 import { PurchaseOrderHandler } from './resources/purchase-orders';
 import { BranchHandler } from './resources/branches';
+import { BankAccountHandler } from './resources/bank-accounts';
+import { PriceBookHandler } from './resources/price-books';
+import { SurchargeHandler } from './resources/surcharges';
 
 export class KiotVietClient {
   private config: Required<KiotVietClientConfig>;
@@ -28,6 +31,9 @@ export class KiotVietClient {
   public readonly users: UserHandler;
   public readonly purchaseOrders: PurchaseOrderHandler;
   public readonly branches: BranchHandler;
+  public readonly bankAccounts: BankAccountHandler;
+  public readonly priceBooks: PriceBookHandler;
+  public readonly surcharges: SurchargeHandler;
 
   constructor(config: KiotVietClientConfig) {
     this.validateConfig(config);
@@ -48,6 +54,9 @@ export class KiotVietClient {
     this.users = new UserHandler(this);
     this.purchaseOrders = new PurchaseOrderHandler(this);
     this.branches = new BranchHandler(this);
+    this.bankAccounts = new BankAccountHandler(this);
+    this.priceBooks = new PriceBookHandler(this);
+    this.surcharges = new SurchargeHandler(this);
   }
 
   private validateConfig(config: KiotVietClientConfig): void {
