@@ -121,4 +121,27 @@ export class InvoiceHandler {
     });
     return response.data;
   }
+
+  /**
+   * Get an invoice by its code
+   * @param code The code of the invoice to retrieve
+   */
+  async getByCode(code: string): Promise<Invoice> {
+    const response = await this.client.apiClient.get<Invoice>(`/invoices/code/${code}`);
+    return response.data;
+  }
+
+  /**
+   * Delete/void an invoice
+   * @param invoiceId The ID of the invoice to delete
+   * @param isVoidPayment Whether to void the associated payment
+   */
+  async delete(invoiceId: number, isVoidPayment = false): Promise<void> {
+    await this.client.apiClient.delete('/invoices', {
+      params: {
+        id: invoiceId,
+        isVoidPayment: isVoidPayment,
+      },
+    });
+  }
 }

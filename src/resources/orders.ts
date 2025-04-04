@@ -66,6 +66,28 @@ export class OrderHandler {
   }
 
   /**
+   * Get an order by its code
+   * @param code The code of the order to retrieve
+   */
+  async getByCode(code: string): Promise<Order> {
+    const response = await this.client.apiClient.get<Order>(`/orders/code/${code}`);
+    return response.data;
+  }
+
+  /**
+   * Delete an order
+   * @param orderId The ID of the order to delete
+   * @param isVoidPayment Whether to void the associated payment
+   */
+  async delete(orderId: number, isVoidPayment = false): Promise<void> {
+    await this.client.apiClient.delete(`/orders/${orderId}`, {
+      params: {
+        IsVoidPayment: isVoidPayment,
+      },
+    });
+  }
+
+  /**
    * Get orders by date range
    * @param fromDate Start date (YYYY-MM-DD)
    * @param toDate End date (YYYY-MM-DD)
