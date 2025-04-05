@@ -6,22 +6,28 @@ export interface Surcharge {
   name: string;
   value: number;
   isPercent: boolean;
+  isAutoAdd: boolean;
+  isRequired: boolean;
   description?: string;
-  status: 'Active' | 'Inactive';
+  isActive: boolean;
   retailerId: number;
-  branchId: number;
+  branchId?: number;
+  branchIds?: number[];
+  createdBy?: string;
   createdDate: string;
-  modifiedDate: string;
+  modifiedDate?: string;
 }
 
 export interface SurchargeCreateParams {
-  code: string;
+  code?: string;
   name: string;
   value: number;
   isPercent: boolean;
+  isAutoAdd?: boolean;
+  isRequired?: boolean;
   description?: string;
-  branchId?: number;
-  status?: 'Active' | 'Inactive';
+  branchIds?: number[];
+  isActive?: boolean;
 }
 
 export interface SurchargeUpdateParams extends Partial<SurchargeCreateParams> {
@@ -31,9 +37,14 @@ export interface SurchargeUpdateParams extends Partial<SurchargeCreateParams> {
 export interface SurchargeListParams {
   pageSize?: number;
   currentItem?: number;
-  status?: 'Active' | 'Inactive';
+  lastModifiedFrom?: string;
+  orderBy?: string;
+  orderDirection?: 'ASC' | 'DESC';
+  isActive?: boolean;
   branchId?: number;
-  searchText?: string;
+  includeRemoveIds?: boolean;
+  code?: string;
+  name?: string;
 }
 
 export type SurchargeListResponse = KiotVietListResponse<Surcharge>;

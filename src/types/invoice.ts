@@ -1,19 +1,22 @@
 import { KiotVietListResponse } from './common';
-import { OrderProduct } from './order';
 
 export interface InvoicePayment {
+  id: number;
+  code: string;
   amount: number;
-  method: number;
-  methodStr?: string;
+  method: string;
   status?: number;
-  refNumber?: string;
-  bankName?: string;
-  bankAccountId?: number;
+  statusValue?: string;
+  transDate: string;
+  bankAccount?: string;
+  accountId?: number;
+  description?: string;
 }
 
 export interface Invoice {
   id: number;
   code: string;
+  orderCode?: string;
   purchaseDate: string;
   branchId: number;
   branchName: string;
@@ -23,38 +26,138 @@ export interface Invoice {
   total: number;
   totalPayment: number;
   discount?: number;
+  discountRatio?: number;
   description?: string;
   status: number;
   statusValue: string;
-  invoiceDetails: OrderProduct[];
+  usingCod: boolean;
+  invoiceDetails: Array<{
+    productId: number;
+    productCode: string;
+    productName: string;
+    quantity: number;
+    price: number;
+    discount?: number;
+    discountRatio?: number;
+    note?: string;
+    serialNumbers?: string;
+    productBatchExpire?: {
+      id: number;
+      productId: number;
+      batchName: string;
+      fullNameVirgule: string;
+      createdDate: string;
+      expireDate: string;
+    };
+  }>;
+  invoiceOrderSurcharges?: Array<{
+    id: number;
+    invoiceId?: number;
+    surchargeId?: number;
+    surchargeName: string;
+    surValue?: number;
+    price?: number;
+    createdDate: string;
+  }>;
+  invoiceDelivery?: {
+    deliveryCode: string;
+    type?: number;
+    status: number;
+    statusValue: string;
+    price?: number;
+    receiver: string;
+    contactNumber: string;
+    address: string;
+    locationId?: number;
+    locationName?: string;
+    usingPriceCod: boolean;
+    priceCodPayment: number;
+    weight?: number;
+    length?: number;
+    width?: number;
+    height?: number;
+    partnerDeliveryId?: number;
+    partnerDelivery?: {
+      code: string;
+      name: string;
+      address: string;
+      contactNumber: string;
+      email: string;
+    };
+  };
   payments: InvoicePayment[];
   retailerId: number;
   soldById?: number;
   soldByName?: string;
-  modifiedDate: string;
+  saleChannelId?: number;
+  modifiedDate?: string;
   createdDate: string;
   orderId?: number;
-  orderCode?: string;
 }
 
 export interface InvoiceCreateParams {
   branchId: number;
+  purchaseDate?: string;
   customerId?: number;
+  discount?: number;
+  totalPayment: number;
+  method?: string;
+  accountId?: number;
+  usingCod?: boolean;
+  soldById?: number;
+  orderId?: number;
+  saleChannelId?: number;
+  isApplyVoucher?: boolean;
   invoiceDetails: Array<{
     productId: number;
+    productCode: string;
+    productName: string;
     quantity: number;
     price: number;
     discount?: number;
+    discountRatio?: number;
     note?: string;
+    serialNumbers?: string;
   }>;
-  description?: string;
-  discount?: number;
-  orderId?: number;
-  payments?: Array<{
-    amount: number;
-    method: number;
-    refNumber?: string;
-    bankAccountId?: number;
+  deliveryDetail?: {
+    type?: number;
+    status: number;
+    price?: number;
+    receiver: string;
+    contactNumber: string;
+    address: string;
+    locationId?: number;
+    locationName?: string;
+    wardName?: string;
+    weight?: number;
+    length?: number;
+    width?: number;
+    height?: number;
+    partnerDeliveryId?: number;
+    expectedDelivery?: string;
+    partnerDelivery?: {
+      code: string;
+      name: string;
+      address: string;
+      contactNumber: string;
+      email: string;
+    };
+  };
+  customer?: {
+    id?: number;
+    code?: string;
+    name: string;
+    gender?: boolean;
+    birthDate?: string;
+    contactNumber?: string;
+    address?: string;
+    email?: string;
+    comment?: string;
+  };
+  surchages?: Array<{
+    id: number;
+    code: string;
+    price: number;
   }>;
 }
 
@@ -63,15 +166,22 @@ export interface InvoiceUpdateParams extends Partial<Omit<InvoiceCreateParams, '
 }
 
 export interface InvoiceListParams {
+  branchIds?: number[];
+  customerIds?: number[];
+  customerCode?: string;
+  status?: number[];
+  includePayment?: boolean;
+  includeInvoiceDelivery?: boolean;
+  lastModifiedFrom?: string;
   pageSize?: number;
   currentItem?: number;
-  status?: number;
+  toDate?: string;
+  orderBy?: string;
+  orderDirection?: 'ASC' | 'DESC';
+  orderId?: number;
+  createdDate?: string;
   fromPurchaseDate?: string;
   toPurchaseDate?: string;
-  customerPhone?: string;
-  customerCode?: string;
-  invoiceCode?: string;
-  orderId?: number;
 }
 
 export interface InvoiceStatusCount {

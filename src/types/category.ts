@@ -1,20 +1,23 @@
 import { KiotVietListResponse } from './common';
 
 export interface Category {
-  id: number;
-  name: string;
+  categoryId: number;
+  categoryName: string;
   parentId: number | null;
-  hasChild: boolean;
+  hasChild?: boolean;
   description?: string;
   retailerId: number;
+  rank?: number;
+  isDeleted?: boolean;
   modifiedDate: string;
   createdDate: string;
 }
 
 export interface CategoryCreateParams {
-  name: string;
+  categoryName: string;
   parentId?: number;
   description?: string;
+  rank?: number;
 }
 
 export interface CategoryUpdateParams extends Partial<CategoryCreateParams> {
@@ -22,9 +25,13 @@ export interface CategoryUpdateParams extends Partial<CategoryCreateParams> {
 }
 
 export interface CategoryListParams {
+  lastModifiedFrom?: string;
   pageSize?: number;
   currentItem?: number;
+  orderBy?: string;
+  orderDirection?: 'ASC' | 'DESC';
   hierarchicalData?: boolean;
+  includeRemoveIds?: boolean;
 }
 
 export type CategoryListResponse = KiotVietListResponse<Category>;

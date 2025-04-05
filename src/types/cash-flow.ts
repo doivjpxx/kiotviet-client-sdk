@@ -2,13 +2,18 @@ import { KiotVietListResponse } from './common';
 export interface CashFlow {
   id: number;
   code: string;
-  address?: string;
+  documentCode?: string;
   branchId: number;
+  branchName?: string;
+  address?: string;
   wardName?: string;
   contactNumber?: string;
+  createdDate: string;
+  modifiedDate?: string;
   createdBy: number;
   usedForFinancialReporting: number;
   cashFlowGroupId?: number;
+  cashFlowGroupName?: string;
   method: string;
   partnerType: string;
   partnerId?: number;
@@ -19,7 +24,16 @@ export interface CashFlow {
   partnerName: string;
   user: string;
   accountId?: number;
+  accountName?: string;
   description?: string;
+  receiptType?: number;
+  receiptTypeValue?: string;
+  documentType?: number;
+  documentTypeValue?: string;
+  locationName?: string;
+  debt?: number;
+  isReceipt?: boolean;
+  retailerId: number;
 }
 
 export interface CashFlowListParams {
@@ -45,21 +59,27 @@ export interface CashFlowListParams {
   currentItem?: number;
 }
 
-export interface PaymentRequest {
+export interface CashFlowCreateParams {
+  branchId: number;
+  accountId?: number;
   amount: number;
-  method: string; // Cash, Card, Transfer
-  accountId?: number; // Required for Card/Transfer payments
-  invoiceId: number;
+  cashFlowGroupId?: number;
+  contactNumber?: string;
+  transDate?: string;
+  description?: string;
+  partnerType?: string;
+  partnerId?: number;
+  address?: string;
+  wardName?: string;
+  documentType?: number;
+  usedForFinancialReporting?: number;
+  isReceipt?: boolean;
+  method?: string;
+  partnerName?: string;
 }
 
-export interface PaymentResponse {
-  paymentId: number;
-  paymentCode: string;
-  amount: number;
-  method: string;
-  accountId?: number;
-  invoiceId: number;
-  documentCode: number;
+export interface CashFlowUpdateParams extends Partial<CashFlowCreateParams> {
+  id: number;
 }
 
 export type CashFlowListResponse = KiotVietListResponse<CashFlow>;
