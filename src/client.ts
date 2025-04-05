@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { KiotVietClientConfig } from './types/common';
 import { API_CONSTANTS } from './config/constants';
 import { TokenManager } from './services/token-manager';
@@ -17,6 +17,7 @@ import { PriceBookHandler } from './resources/price-books';
 import { SupplierHandler } from './resources/suppliers';
 import { TransferHandler } from './resources/transfers';
 import { SurchargeHandler } from './resources/surcharges';
+import { CashFlow } from './resources/cash-flow';
 
 export class KiotVietClient {
   private config: Required<KiotVietClientConfig>;
@@ -38,6 +39,7 @@ export class KiotVietClient {
   public readonly suppliers: SupplierHandler;
   public readonly transfers: TransferHandler;
   public readonly surcharges: SurchargeHandler;
+  public readonly cashFlow: CashFlow;
 
   constructor(config: KiotVietClientConfig) {
     this.validateConfig(config);
@@ -63,6 +65,7 @@ export class KiotVietClient {
     this.suppliers = new SupplierHandler(this);
     this.transfers = new TransferHandler(this);
     this.surcharges = new SurchargeHandler(this);
+    this.cashFlow = new CashFlow(this);
   }
 
   private validateConfig(config: KiotVietClientConfig): void {
@@ -94,5 +97,28 @@ export class KiotVietClient {
    */
   public async refreshToken(): Promise<string> {
     return this.tokenManager.refreshToken();
+  }
+
+  /**
+   * Make a GET request
+   * @param url The URL to make the request to
+   * @param config Optional axios request configuration
+   * @returns Promise with the response data
+   */
+  async get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
+    const response = await this.apiClient.get<T>(url, config);
+    return response.data;
+  }
+
+  /**
+   * Make a POST request
+   * @param url The URL to make the request to
+   * @param data The data to send in the request body
+   * @param config Optional axios request configuration
+   * @returns Promise with the response data
+   */
+  async post<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
+    const response = await this.apiClient.post<T>(url, data, config);
+    return response.data;
   }
 }
