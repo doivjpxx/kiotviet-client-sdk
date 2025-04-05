@@ -1,5 +1,5 @@
 import { KiotVietClient } from '../client';
-import { User, UserListParams, UserListResponse, UserRole } from '../types/user';
+import { User, UserListParams, UserListResponse } from '../types/user';
 
 export class UserHandler {
   constructor(private client: KiotVietClient) {}
@@ -46,21 +46,6 @@ export class UserHandler {
       params: {
         ...params,
         branchId,
-      },
-    });
-    return response.data;
-  }
-
-  /**
-   * Get users by role
-   * @param roleId The role ID to filter by
-   * @param params Additional filter parameters (excluding roleId)
-   */
-  async getByRole(roleId: UserRole, params: Omit<UserListParams, 'roleId'> = {}): Promise<UserListResponse> {
-    const response = await this.client.apiClient.get<UserListResponse>('/users', {
-      params: {
-        ...params,
-        roleId,
       },
     });
     return response.data;

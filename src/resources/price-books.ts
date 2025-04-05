@@ -3,7 +3,7 @@ import {
   PriceBookListParams,
   PriceBookListResponse,
   PriceBookDetailListResponse,
-  UpdatePriceDetailParams,
+  PriceBookDetailUpdateParams,
 } from '../types/price-book';
 
 export class PriceBookHandler {
@@ -31,7 +31,7 @@ export class PriceBookHandler {
    * Update price details for a product in a price book
    * @param data The price detail update data
    */
-  async updatePriceDetail(data: UpdatePriceDetailParams): Promise<void> {
+  async updatePriceDetail(data: PriceBookDetailUpdateParams): Promise<void> {
     await this.client.apiClient.post('/pricebooks/detail', data);
   }
 }
