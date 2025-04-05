@@ -83,6 +83,52 @@ export class ProductHandler {
    * Get a product by its barcode
    * @param barcode The product barcode
    */
+  /**
+   * Get a product by its code
+   * @param code The product code
+   */
+  async getByCode(code: string): Promise<Product> {
+    const response = await this.client.apiClient.get<Product>(`/products/code/${code}`);
+    return response.data;
+  }
+
+  /**
+   * Get all product attributes with their distinct values
+   */
+  async getAttributes(): Promise<any> {
+    const response = await this.client.apiClient.get('/attributes/allwithdistinctvalue');
+    return response.data;
+  }
+
+  /**
+   * Add multiple products at once
+   * @param products Array of product data to create
+   */
+  async bulkCreate(products: ProductCreateParams[]): Promise<void> {
+    await this.client.apiClient.post('/listaddproducts', {
+      listProducts: products,
+    });
+  }
+
+  /**
+   * Update multiple products at once
+   * @param products Array of product data to update
+   */
+  async bulkUpdate(products: ProductUpdateParams[]): Promise<void> {
+    await this.client.apiClient.put('/listupdatedproducts', {
+      listProducts: products,
+    });
+  }
+
+  /**
+   * Get product inventory levels across branches
+   * @param params Query parameters (branchIds, lastModifiedFrom, etc)
+   */
+  async getInventoryLevels(params: Record<string, any> = {}): Promise<any> {
+    const response = await this.client.apiClient.get('/productOnHands', { params });
+    return response.data;
+  }
+
   async getByBarcode(barcode: string): Promise<Product> {
     const response = await this.client.apiClient.get<KiotVietListResponse<Product>>('/products', {
       params: {
