@@ -16,7 +16,7 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "prepublishOnly": "npm run build",
     "prepare": "npm run build",
-    "docs": "typedoc --out docs/api src/index.ts"
+    "docs": "typedoc --entryPoints src/index.ts --out docs"
   },
   "keywords": [
     "kiotviet",
