@@ -23,20 +23,20 @@ Tài liệu này cung cấp hướng dẫn chi tiết về cách sử dụng cá
 
 ## Mục lục
 
-- [Sản phẩm (Products)](./products.md)
-- [Khách hàng (Customers)](./customers.md)
-- [Đơn hàng (Orders)](./orders.md)
-- [Đơn đặt hàng (Purchase Orders)](./purchase-orders.md)
-- [Danh mục (Categories)](./categories.md)
-- [Hóa đơn (Invoices)](./invoices.md)
-- [Chi nhánh (Branches)](./branches.md)
-- [Nhà cung cấp (Suppliers)](./suppliers.md)
-- [Vouchers](./vouchers.md)
-- [Người dùng (Users)](./users.md)
-- [Báo cáo dòng tiền (Cash Flow)](./cash-flow.md)
-- [Phụ thu (Surcharges)](./surcharges.md)
-- [Webhooks](./webhooks.md)
-- [Cài đặt (Settings)](./settings.md)
+- [Sản phẩm (Products)](#sản-phẩm-products)
+- [Khách hàng (Customers)](#khách-hàng-customers)
+- [Đơn hàng (Orders)](#đơn-hàng-orders)
+- [Đơn đặt hàng (Purchase Orders)](#đơn-đặt-hàng-purchase-orders)
+- [Danh mục (Categories)](#danh-mục-categories)
+- [Hóa đơn (Invoices)](#hóa-đơn-invoices)
+- [Chi nhánh (Branches)](#chi-nhánh-branches)
+- [Nhà cung cấp (Suppliers)](#nhà-cung-cấp-suppliers)
+- [Vouchers](#vouchers)
+- [Người dùng (Users)](#người-dùng-users)
+- [Báo cáo dòng tiền (Cash Flow)](#báo-cáo-dòng-tiền-cash-flow)
+- [Phụ thu (Surcharges)](#phụ-thu-surcharges)
+- [Webhooks](#webhooks)
+- [Cài đặt (Settings)](#cài-đặt-settings)
 
 Mỗi tài liệu API sẽ bao gồm:
 - Danh sách đầy đủ các phương thức có sẵn
