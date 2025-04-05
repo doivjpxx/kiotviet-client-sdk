@@ -6,7 +6,7 @@ import {
   InvoiceListParams,
   InvoiceListResponse,
   InvoiceStatus,
-} from '../types/invoice';
+} from '../types';
 
 export class InvoiceHandler {
   constructor(private client: KiotVietClient) {}

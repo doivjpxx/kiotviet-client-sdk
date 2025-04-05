@@ -20,6 +20,9 @@ import { SurchargeHandler } from './resources/surcharges';
 import { CashFlowHandler } from './resources/cash-flow';
 import { ReturnsHandler } from './resources/returns';
 import { VouchersHandler } from './resources/vouchers';
+import { SalesChannelsHandler } from './resources/sales-channels';
+import { TrademarksHandler } from './resources/trademarks';
+import { SettingsHandler } from './resources/settings';
 
 export class KiotVietClient {
   private config: Required<KiotVietClientConfig>;
@@ -44,6 +47,9 @@ export class KiotVietClient {
   public readonly cashFlow: CashFlowHandler;
   public readonly returns: ReturnsHandler;
   public readonly vouchers: VouchersHandler;
+  public readonly salesChannels: SalesChannelsHandler;
+  public readonly trademarks: TrademarksHandler;
+  public readonly settings: SettingsHandler;
 
   constructor(config: KiotVietClientConfig) {
     this.validateConfig(config);
@@ -72,6 +78,9 @@ export class KiotVietClient {
     this.cashFlow = new CashFlowHandler(this);
     this.returns = new ReturnsHandler(this);
     this.vouchers = new VouchersHandler(this);
+    this.salesChannels = new SalesChannelsHandler(this);
+    this.trademarks = new TrademarksHandler(this);
+    this.settings = new SettingsHandler(this);
   }
 
   private validateConfig(config: KiotVietClientConfig): void {

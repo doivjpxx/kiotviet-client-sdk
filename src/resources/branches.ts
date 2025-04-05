@@ -1,5 +1,5 @@
 import { KiotVietClient } from '../client';
-import { Branch, BranchCreateParams, BranchUpdateParams, BranchListParams, BranchListResponse } from '../types/branch';
+import { Branch, BranchCreateParams, BranchUpdateParams, BranchListParams, BranchListResponse } from '../types';
 
 export class BranchHandler {
   constructor(private client: KiotVietClient) {}

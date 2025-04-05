@@ -1,5 +1,5 @@
 import { KiotVietClient } from '../client';
-import { BankAccount, BankAccountListParams, BankAccountListResponse } from '../types/bank-account';
+import { BankAccount, BankAccountListParams, BankAccountListResponse } from '../types';
 
 export class BankAccountHandler {
   constructor(private client: KiotVietClient) {}

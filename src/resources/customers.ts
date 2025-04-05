@@ -1,7 +1,7 @@
 import { KiotVietClient } from '../client';
 import { KiotVietListResponse, CustomerCreateParams } from '../types';
 import { ValidationError } from '../errors';
-import { Customer } from '../types/customer';
+import { Customer } from '../types';
 
 export class CustomerHandler {
   constructor(private client: KiotVietClient) {}

@@ -5,7 +5,7 @@ import {
   CategoryUpdateParams,
   CategoryListParams,
   CategoryListResponse,
-} from '../types/category';
+} from '../types';
 
 export class CategoryHandler {
   constructor(private client: KiotVietClient) {}
