@@ -19,6 +19,7 @@ import { TransferHandler } from './resources/transfers';
 import { SurchargeHandler } from './resources/surcharges';
 import { CashFlowHandler } from './resources/cash-flow';
 import { ReturnsHandler } from './resources/returns';
+import { VouchersHandler } from './resources/vouchers';
 
 export class KiotVietClient {
   private config: Required<KiotVietClientConfig>;
@@ -42,6 +43,7 @@ export class KiotVietClient {
   public readonly surcharges: SurchargeHandler;
   public readonly cashFlow: CashFlowHandler;
   public readonly returns: ReturnsHandler;
+  public readonly vouchers: VouchersHandler;
 
   constructor(config: KiotVietClientConfig) {
     this.validateConfig(config);
@@ -69,6 +71,7 @@ export class KiotVietClient {
     this.surcharges = new SurchargeHandler(this);
     this.cashFlow = new CashFlowHandler(this);
     this.returns = new ReturnsHandler(this);
+    this.vouchers = new VouchersHandler(this);
   }
 
   private validateConfig(config: KiotVietClientConfig): void {
@@ -122,6 +125,29 @@ export class KiotVietClient {
    */
   async post<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
     const response = await this.apiClient.post<T>(url, data, config);
+    return response.data;
+  }
+
+  /**
+   * Make a DELETE request
+   * @param url The URL to make the request to
+   * @param config Optional axios request configuration
+   * @returns Promise with the response data
+   */
+  async delete<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
+    const response = await this.apiClient.delete<T>(url, config);
+    return response.data;
+  }
+
+  /**
+   * Make a PUT request
+   * @param url The URL to make the request to
+   * @param data The data to send in the request body
+   * @param config Optional axios request configuration
+   * @returns Promise with the response data
+   */
+  async put<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
+    const response = await this.apiClient.put<T>(url, data, config);
     return response.data;
   }
 }
