@@ -1,7 +1,7 @@
 import { CashFlowListResponse, CashFlowListParams, PaymentRequest, PaymentResponse } from '../types';
 import { KiotVietClient } from '../client';
 
-export class CashFlow {
+export class CashFlowHandler {
   constructor(private client: KiotVietClient) {}
 
   /**

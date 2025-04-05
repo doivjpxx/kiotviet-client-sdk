@@ -17,7 +17,8 @@ import { PriceBookHandler } from './resources/price-books';
 import { SupplierHandler } from './resources/suppliers';
 import { TransferHandler } from './resources/transfers';
 import { SurchargeHandler } from './resources/surcharges';
-import { CashFlow } from './resources/cash-flow';
+import { CashFlowHandler } from './resources/cash-flow';
+import { ReturnsHandler } from './resources/returns';
 
 export class KiotVietClient {
   private config: Required<KiotVietClientConfig>;
@@ -39,7 +40,8 @@ export class KiotVietClient {
   public readonly suppliers: SupplierHandler;
   public readonly transfers: TransferHandler;
   public readonly surcharges: SurchargeHandler;
-  public readonly cashFlow: CashFlow;
+  public readonly cashFlow: CashFlowHandler;
+  public readonly returns: ReturnsHandler;
 
   constructor(config: KiotVietClientConfig) {
     this.validateConfig(config);
@@ -65,7 +67,8 @@ export class KiotVietClient {
     this.suppliers = new SupplierHandler(this);
     this.transfers = new TransferHandler(this);
     this.surcharges = new SurchargeHandler(this);
-    this.cashFlow = new CashFlow(this);
+    this.cashFlow = new CashFlowHandler(this);
+    this.returns = new ReturnsHandler(this);
   }
 
   private validateConfig(config: KiotVietClientConfig): void {
