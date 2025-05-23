@@ -2206,10 +2206,17 @@ await client.webhooks.disable(123);
 ### 4. Xử lý webhook payload
 
 ```typescript
+// Middleware để lấy raw body cho việc tạo chữ ký
+app.use(bodyParser.json({
+  verify: (req, res, buf) => {
+    req.rawBody = buf;
+  }
+}));
+
 // Xử lý webhook trong Express.js
 app.post('/webhook', (req, res) => {
-  const signature = req.headers['x-kiotviet-signature'];
-  const payload = JSON.stringify(req.body);
+  const signature = req.headers['x-hub-signature'];
+  const payload = req.rawBody.toString();
   const secret = 'your-webhook-secret';
 
   try {
@@ -2222,17 +2229,65 @@ app.post('/webhook', (req, res) => {
 
     // Xử lý dữ liệu dựa trên loại sự kiện
     switch (webhookData.event) {
-      case WebhookEvent.OrderCreated:
-        // Xử lý đơn hàng mới
+      // ===== CUSTOMER EVENTS =====
+      case WebhookEvent.CustomerUpdated:
+        // Xử lý cập nhật khách hàng
+        const customerData = webhookData.data as CustomerUpdateWebhookPayload;
+        
+        // Truy cập dữ liệu khách hàng đã cập nhật
+        for (const notification of customerData.Notifications) {
+          for (const customer of notification.Data) {
+            console.log(`Khách hàng cập nhật: ${customer.Name} (${customer.Code})`);
+            // Xử lý cập nhật khách hàng
+          }
+        }
         break;
+      
+      case WebhookEvent.CustomerDeleted:
+        const customerDeleteData = webhookData.data as { RemoveId: number[] };
+        console.log('ID khách hàng bị xóa:', customerDeleteData.RemoveId);
+        break;
+
+      // ===== PRODUCT EVENTS =====
       case WebhookEvent.ProductUpdated:
+        const productData = webhookData.data as ProductUpdateWebhookPayload;
         // Xử lý cập nhật sản phẩm
+        break;
+      
+      case WebhookEvent.ProductDeleted:
+        const productDeleteData = webhookData.data as { RemoveId: number[] };
+        console.log('ID sản phẩm bị xóa:', productDeleteData.RemoveId);
+        break;
+      
+      // ===== ORDER EVENTS =====
+      case WebhookEvent.OrderCreated:
+      case WebhookEvent.OrderUpdated:
+        const orderData = webhookData.data as OrderUpdateWebhookPayload;
+        // Xử lý đơn hàng
+        break;
+        
+      // ===== INVOICE EVENTS =====
+      case WebhookEvent.InvoiceUpdated:
+        const invoiceData = webhookData.data as InvoiceUpdateWebhookPayload;
+        // Xử lý hóa đơn
+        break;
+        
+      // ===== STOCK EVENTS =====
+      case WebhookEvent.StockUpdated:
+        const stockData = webhookData.data as StockUpdateWebhookPayload;
+        // Xử lý cập nhật tồn kho
+        break;
+        
+      // ===== PRICEBOOK EVENTS =====
+      case WebhookEvent.PriceBookUpdated:
+      case WebhookEvent.PriceBookDetailUpdated:
+        // Xử lý cập nhật bảng giá
         break;
     }
 
     res.sendStatus(200);
   } catch (error) {
-    console.error('Webhook error:', error);
+    console.error('Lỗi webhook:', error);
     res.sendStatus(400);
   }
 });
@@ -2259,42 +2314,92 @@ interface Webhook {
 
 ```typescript
 enum WebhookEvent {
-  // Sự kiện sản phẩm
+  // Sự kiện sản phẩm (Product)
   ProductCreated = 'product.created',
   ProductUpdated = 'product.updated',
   ProductDeleted = 'product.deleted',
-
-  // Sự kiện danh mục
+  
+  // Sự kiện danh mục (Category)
   CategoryCreated = 'category.created',
   CategoryUpdated = 'category.updated',
   CategoryDeleted = 'category.deleted',
-
-  // Sự kiện khách hàng
+  
+  // Sự kiện khách hàng (Customer)
   CustomerCreated = 'customer.created',
   CustomerUpdated = 'customer.updated',
   CustomerDeleted = 'customer.deleted',
-
-  // Sự kiện đơn hàng
+  
+  // Sự kiện đơn hàng (Order)
   OrderCreated = 'order.created',
   OrderUpdated = 'order.updated',
   OrderDeleted = 'order.deleted',
-
-  // Sự kiện hóa đơn
+  
+  // Sự kiện hóa đơn (Invoice)
   InvoiceCreated = 'invoice.created',
   InvoiceUpdated = 'invoice.updated',
-  InvoiceDeleted = 'invoice.deleted'
+  InvoiceDeleted = 'invoice.deleted',
+  
+  // Sự kiện tồn kho (Stock)
+  StockUpdated = 'stock.update',
+  
+  // Sự kiện bảng giá (PriceBook)
+  PriceBookUpdated = 'pricebook.update',
+  PriceBookDeleted = 'pricebook.delete',
+  PriceBookDetailUpdated = 'pricebookdetail.update',
+  PriceBookDetailDeleted = 'pricebookdetail.delete',
+  
+  // Sự kiện chi nhánh (Branch)
+  BranchUpdated = 'branch.update',
+  BranchDeleted = 'branch.delete'
 }
 ```
 
-### WebhookPayload (Dữ liệu webhook)
+## Cấu trúc dữ liệu webhook
+
+SDK cung cấp các interface để giúp bạn xử lý dữ liệu webhook một cách dễ dàng với TypeScript. Dưới đây là các cấu trúc dữ liệu chính:
 
 ```typescript
-interface WebhookPayload<T = any> {
+export interface WebhookPayload<T = any> {
   event: WebhookEvent;  // Loại sự kiện
   data: T;             // Dữ liệu sự kiện
   timestamp: string;   // Thời gian xảy ra
   retailerId: number;  // ID nhà bán lẻ
   signature: string;   // Chữ ký
+}
+
+// Cấu trúc chung cho các webhook sự kiện update
+export interface GenericUpdateWebhookPayload<T> {
+  Id: string;           // ID của webhook
+  Attempt: number;      // Số lần thử gửi
+  Notifications: [{
+    Action: string;     // Hành động (customer.update, product.update, ...)
+    Data: T[];          // Mảng dữ liệu
+  }]
+}
+
+// Cấu trúc chung cho các webhook sự kiện delete
+export interface GenericDeleteWebhookPayload {
+  RemoveId: number[];   // Mảng ID các mục bị xóa
+}
+
+// Kiểu dữ liệu cho webhook customer.update
+export interface CustomerUpdateWebhookPayload extends GenericUpdateWebhookPayload<CustomerWebhookData> {}
+
+export interface CustomerWebhookData {
+  Id: number;           // ID khách hàng
+  Code: string;         // Mã khách hàng
+  Name: string;         // Tên khách hàng
+  Gender?: boolean;     // Giới tính
+  BirthDate?: string;   // Ngày sinh
+  ContactNumber?: string; // Số điện thoại
+  Address?: string;     // Địa chỉ
+  LocationName?: string; // Tên địa điểm
+  Email?: string;       // Email
+  ModifiedDate: string; // Ngày cập nhật
+  Type?: number;        // Loại khách hàng
+  Organization?: string; // Tổ chức
+  TaxCode?: string;     // Mã số thuế
+  Comments?: string;    // Ghi chú
 }
 ```
 
