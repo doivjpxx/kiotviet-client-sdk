@@ -1,6 +1,6 @@
 {
   "name": "kiotviet-client-sdk",
-  "version": "0.3.2",
+  "version": "0.3.4",
   "description": "Node.js SDK for KiotViet Retail Public API with automatic token management and TypeScript support",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -43,9 +43,6 @@
   "license": "MIT",
   "engines": {
     "node": ">=14.0.0"
-  },
-  "dependencies": {
-    "axios": "^1.8.4"
   },
   "devDependencies": {
     "@types/axios": "^0.14.4",
